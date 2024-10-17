@@ -1,29 +1,33 @@
 package com.project.staragile.banking.model;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-@Table(name = "accounts")
+@Table(name = "accounts") // Specify the table name
 public class Account {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long accountNo;
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Use the appropriate strategy
+    private Long accountNo; // Primary key
 
-    private String accountHolderName;
-    private double balance;
+    private String name; // Account holder name
+    private double balance; // Account balance
 
     // Default constructor
     public Account() {}
 
-    // Constructor with parameters
-    public Account(Long accountNo, String accountHolderName, double balance) {
+    // Parameterized constructor
+    public Account(Long accountNo, String name, double balance) {
         this.accountNo = accountNo;
-        this.accountHolderName = accountHolderName;
+        this.name = name;
         this.balance = balance;
     }
 
-    // Getters and Setters
+    // Getters and setters
     public Long getAccountNo() {
         return accountNo;
     }
@@ -32,12 +36,12 @@ public class Account {
         this.accountNo = accountNo;
     }
 
-    public String getAccountHolderName() {
-        return accountHolderName;  // Ensure this method exists
+    public String getName() {
+        return name;
     }
 
-    public void setAccountHolderName(String accountHolderName) {
-        this.accountHolderName = accountHolderName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public double getBalance() {
@@ -47,4 +51,6 @@ public class Account {
     public void setBalance(double balance) {
         this.balance = balance;
     }
+
+    // Other methods if needed...
 }
