@@ -11,6 +11,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/accounts")
 public class AccountController {
+
     @Autowired
     private AccountService accountService;
 
@@ -25,14 +26,14 @@ public class AccountController {
         return updatedAccount != null ? ResponseEntity.ok(updatedAccount) : ResponseEntity.notFound().build();
     }
 
-    @GetMapping("/viewPolicy/{accountNo}")
-    public ResponseEntity<Account> viewPolicy(@PathVariable Long accountNo) {
-        Optional<Account> account = accountService.viewAccount(accountNo);
-        return account.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    @GetMapping("/viewAccount/{accountNo}")  // Updated to viewAccount for clarity
+    public ResponseEntity<Account> viewAccount(@PathVariable Long accountNo) {
+        Account account = accountService.getAccountDetails(accountNo);  // Changed to getAccountDetails
+        return account != null ? ResponseEntity.ok(account) : ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("/deletePolicy/{accountNo}")
-    public ResponseEntity<Void> deletePolicy(@PathVariable Long accountNo) {
+    @DeleteMapping("/deleteAccount/{accountNo}")  // Updated to deleteAccount for clarity
+    public ResponseEntity<Void> deleteAccount(@PathVariable Long accountNo) {
         accountService.deleteAccount(accountNo);
         return ResponseEntity.noContent().build();
     }

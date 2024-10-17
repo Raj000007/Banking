@@ -17,12 +17,14 @@ public class AccountService {
     public Account getAccountDetails(Long accountNo) {
         Optional<Account> accountDetails = accountRepository.findById(accountNo);
         if (accountDetails.isPresent()) {
-            // Use getAccountHolderName() to retrieve the name
-            String name = accountDetails.get().getAccountHolderName(); // Correct method call
-            // Further processing can be done here
             return accountDetails.get();
         }
         return null; // or throw an exception if account not found
+    }
+
+    // Method to view account details (this method can be added if it was intended)
+    public Account viewAccount(Long accountNo) {
+        return getAccountDetails(accountNo);
     }
 
     // Method to create a new account
