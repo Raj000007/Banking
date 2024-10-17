@@ -15,7 +15,7 @@ public class DataInitializer {
     @PostConstruct
     public void init() {
         // Preload some data into the database
-        accountRepository.save(new Account("John Doe", 1000.00));
-        accountRepository.save(new Account("Jane Smith", 1500.00));
+        accountRepository.save(new Account("John Doe", 1000.00)); // This uses the 2-arg constructor
+        accountRepository.save(new Account("Jane Smith", 1500.00)); // This uses the 2-arg constructor
     }
 }
