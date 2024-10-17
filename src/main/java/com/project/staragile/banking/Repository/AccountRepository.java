@@ -1,8 +1,13 @@
-package com.project.staragile.banking.repository;
+package com.project.staragile.banking;
 
-import com.project.staragile.banking.model.Account;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-public interface AccountRepository extends JpaRepository<Account, Long> {
-    Account findByAccountNo(String accountNo);
+@SpringBootApplication
+@EnableJpaRepositories
+public class BankingApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(BankingApplication.class, args);
+    }
 }

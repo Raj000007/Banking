@@ -17,24 +17,20 @@ public class AccountService {
         return accountRepository.save(account);
     }
 
-    public Account updateAccount(String accountNo, Account accountDetails) {
-        Account account = accountRepository.findByAccountNo(accountNo);
-        if (account != null) {
-            account.setName(accountDetails.getName());
-            account.setBalance(accountDetails.getBalance());
-            return accountRepository.save(account);
-        }
-        return null;
+    public Optional<Account> updateAccount(String accountNo, Account accountDetails) {
+        return accountRepository.findById(accountNo)
+                .map(account -> {
+                    account.setName(accountDetails.getName());
+                    account.setBalance(accountDetails.getBalance());
+                    return accountRepository.save(account);
+                });
     }
 
-    public Account viewAccount(String accountNo) {
-        return accountRepository.findByAccountNo(accountNo);
+    public Optional<Account> viewAccount(String accountNo) {
+        return accountRepository.findById(accountNo);
     }
 
     public void deleteAccount(String accountNo) {
-        Account account = accountRepository.findByAccountNo(accountNo);
-        if (account != null) {
-            accountRepository.delete(account);
-        }
+        accountRepository.deleteById(accountNo);
     }
 }
