@@ -4,47 +4,31 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "accounts")
 public class Account {
     @Id
-    private String accountNo; // Assuming accountNo is a String based on your earlier messages.
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long accountNo;
+    private String accountHolderName;
+    private double balance;
 
-    private String name;
-    private Double balance;
-
-    // Default constructor
     public Account() {}
 
-    // Parameterized constructor
-    public Account(String accountNo, String name, Double balance) {
+    public Account(Long accountNo, String accountHolderName, double balance) {
         this.accountNo = accountNo;
-        this.name = name;
+        this.accountHolderName = accountHolderName;
         this.balance = balance;
     }
 
-    // Getters and Setters
-    public String getAccountNo() {
-        return accountNo;
-    }
+    public Long getAccountNo() { return accountNo; }
+    public void setAccountNo(Long accountNo) { this.accountNo = accountNo; }
 
-    public void setAccountNo(String accountNo) {
-        this.accountNo = accountNo;
-    }
+    public String getAccountHolderName() { return accountHolderName; }
+    public void setAccountHolderName(String accountHolderName) { this.accountHolderName = accountHolderName; }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Double getBalance() {
-        return balance;
-    }
-
-    public void setBalance(Double balance) {
-        this.balance = balance;
-    }
+    public double getBalance() { return balance; }
+    public void setBalance(double balance) { this.balance = balance; }
 }
