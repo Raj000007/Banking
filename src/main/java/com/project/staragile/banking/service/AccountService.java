@@ -9,7 +9,6 @@ import java.util.Optional;
 
 @Service
 public class AccountService {
-
     @Autowired
     private AccountRepository accountRepository;
 
@@ -17,20 +16,22 @@ public class AccountService {
         return accountRepository.save(account);
     }
 
-    public Optional<Account> updateAccount(String accountNo, Account accountDetails) {
-        return accountRepository.findById(accountNo)
-                .map(account -> {
-                    account.setName(accountDetails.getName());
-                    account.setBalance(accountDetails.getBalance());
-                    return accountRepository.save(account);
-                });
+    public Account updateAccount(Long accountNo, Account accountDetails) {
+        Optional<Account> account = accountRepository.findById(accountNo);
+        if (account.isPresent()) {
+            Account updatedAccount = account.get();
+            updatedAccount.setAccountHolderName(accountDetails.getAccountHolderName());
+            updatedAccount.setBalance(accountDetails.getBalance());
+            return accountRepository.save(updatedAccount);
+        }
+        return null; // or throw an exception
     }
 
-    public Optional<Account> viewAccount(String accountNo) {
+    public Optional<Account> viewAccount(Long accountNo) {
         return accountRepository.findById(accountNo);
     }
 
-    public void deleteAccount(String accountNo) {
+    public void deleteAccount(Long accountNo) {
         accountRepository.deleteById(accountNo);
     }
 }

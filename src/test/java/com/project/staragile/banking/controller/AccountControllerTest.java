@@ -1,9 +1,9 @@
-package com.project.staragile.banking;
+package com.project.staragile.banking.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.staragile.banking.controller.AccountController;
 import com.project.staragile.banking.model.Account;
-import com.project.staragile.banking.repository.AccountRepository;
+import com.project.staragile.banking.service.AccountService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -26,7 +26,7 @@ public class AccountControllerTest {
     private MockMvc mockMvc;
 
     @Mock
-    private AccountRepository accountRepository;
+    private AccountService accountService;
 
     @InjectMocks
     private AccountController accountController;
@@ -43,7 +43,7 @@ public class AccountControllerTest {
 
     @Test
     public void createAccountTest() throws Exception {
-        when(accountRepository.save(any(Account.class))).thenReturn(account);
+        when(accountService.createAccount(any(Account.class))).thenReturn(account);
 
         mockMvc.perform(post("/api/accounts/createAccount")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -53,10 +53,7 @@ public class AccountControllerTest {
 
     @Test
     public void updateAccountTest() throws Exception {
-        when(accountRepository.findById(1L)).thenReturn(java.util.Optional.of(account));
-        when(accountRepository.save(any(Account.class))).thenReturn(account);
-
-        account.setBalance(2000.0);
+        when(accountService.updateAccount(any(Long.class), any(Account.class))).thenReturn(account);
 
         mockMvc.perform(put("/api/accounts/updateAccount/1")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -66,7 +63,7 @@ public class AccountControllerTest {
 
     @Test
     public void viewPolicyTest() throws Exception {
-        when(accountRepository.findById(1L)).thenReturn(java.util.Optional.of(account));
+        when(accountService.viewAccount(any(Long.class))).thenReturn(java.util.Optional.of(account));
 
         mockMvc.perform(get("/api/accounts/viewPolicy/1"))
                 .andExpect(status().isOk());
@@ -74,8 +71,6 @@ public class AccountControllerTest {
 
     @Test
     public void deletePolicyTest() throws Exception {
-        when(accountRepository.existsById(1L)).thenReturn(true);
-
         mockMvc.perform(delete("/api/accounts/deletePolicy/1"))
                 .andExpect(status().isNoContent());
     }
